@@ -275,11 +275,11 @@ done
 >
 > > ## Solution
 > >
-> > Use `nano fastq_script.sh` to open the file.  
-> > Start with a comment using # and add today's date
-> > Loop over all files using `for`, `do`, `done`
-> > Count number of lines using ` wc -l`
-> > Find number of bad reads using `grep NNNN`
+> > - Use `nano fastq_script.sh` to open the file.  
+> > - Start with a comment using # and add today's date
+> > - Loop over all files using `for`, `do`, `done`
+> > - Count number of lines using ` wc -l`
+> > - Find number of bad reads using `grep NNNN`
 > >    ~~~
 > >    for filename in *.fastq
 > >       do echo $filename
