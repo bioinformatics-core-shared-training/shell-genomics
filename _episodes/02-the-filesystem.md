@@ -1,6 +1,6 @@
 ---
 title: "Navigating Files and Directories"
-teaching: 30
+teaching: 20
 exercises: 10
 questions:
 - "How can I perform operations on files outside of my working directory?"
