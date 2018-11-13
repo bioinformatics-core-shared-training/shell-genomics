@@ -44,15 +44,15 @@ Good documentation is key to avoiding this issue, and luckily enough,
 recording your computational experiments is even easier than recording lab data. Copy/Paste will become
 your best friend, sensible file names will make your analysis understandable by you and your collaborators, and
 writing the methods section for your next paper will be easy! Remember that in any given project of yours, it's worthwhile to consider
-a future version of yourself as an entirely separate collaborator. The better your documenation is, the more this 'collaborator' will
+a future version of yourself as an entirely separate collaborator. The better your documentation is, the more this 'collaborator' will
 feel indebted to you!
 
 With this in mind, let's have a look at the best practices for
 documenting your genomics project. Your future self will thank you.  
 
-In this exercise we will setup a file system for the project we will be working on during this workshop.  
+In this exercise we will setup a file system for the project we will be working on.  
 
-We will start by creating a directory that we can use for the rest of the workshop. First navigate to your home directory. Then confirm that you are in the correct directory using the `pwd` command.
+We will start by creating a directory `workspace`. First navigate to your home directory. Then confirm that you are in the correct directory using the `pwd` command.
 
 ~~~
 $ cd
@@ -74,18 +74,20 @@ You should see the output:
 
 > ## Exercise  
 > Use the `mkdir` command to make the following directories:   
-> - `dc_workshop`
-> - `dc_workshop/docs`
-> - `dc_workshop/data`
-> - `dc_workshop/results`
+> - `workspace`
+> - `workspace/docs`
+> - `workspace/data`
+> - `workspace/results`
+> - `workspace/scripts`
 >
 > > ## Solution
 > >
 > > ~~~
-> > $ mkdir dc_workshop
-> > $ mkdir dc_workshop/docs
-> > $ mkdir dc_workshop/data
-> > $ mkdir dc_workshop/results
+> > $ mkdir workspace
+> > $ mkdir workspace/docs
+> > $ mkdir workspace/data
+> > $ mkdir workspace/results
+> > $ mkdir workspace/scripts
 > > ~~~
 > > {: .bash}
 > {: .solution}
@@ -96,27 +98,29 @@ Use `ls -R` to verify that you have created these directories. The `-R` option f
 iteratively.
 
 ~~~
-$ ls -R dc_workshop
+$ ls -R workspace
 ~~~
 {: .bash}
 
 You should see the following output:
 
 ~~~
-dc_workshop/:
-data  docs  results
+workspace/:
+data  docs  results scripts
 
-dc_workshop/data:
+workspace/data:
 
-dc_workshop/docs:
+workspace/docs:
 
-dc_workshop/results:
+workspace/results:
+
+workspace/scripts:
 ~~~
 {: .output}
 
 # Organizing your files
 
-Before begining any analysis, it's important to save a copy of your
+Before beginning any analysis, it's important to save a copy of your
 raw data. The raw data should never be changed. Regardless of how
 sure you are that you want to carry out a particular data cleaning
 step, there's always the chance that you'll change your mind later
@@ -170,18 +174,18 @@ $ history | tail -n 7
 {: .bash}
 
 Using your knowledge of the shell, use the append redirect `>>` to create a file called
-`dc_workshop_log_XXXX_XX_XX.sh` (Use the four-digit year, two-digit month, and two digit day, e.g.
-`dc_workshop_log_2017_10_27.sh`)  
+`workspace_log_XXXX_XX_XX.sh` (Use the four-digit year, two-digit month, and two digit day, e.g.
+`workspace_log_2017_10_27.sh`)  
 
 You may have noticed that your history contains the `history` command itself. To remove this redundancy
 from our log, let's use the `nano` text editor to fix the file:  
 
 ~~~
-$ nano dc_workshop_log_2017_10_27.sh
+$ nano workspace_log_2017_10_27.sh
 ~~~
 {: .bash}
 
-(Remember to replace the `2017_10_27` with your workshop date.)
+(Remember to replace the `2017_10_27` with the current date.)
 
 From the `nano` screen, you can use your cursor to navigate, type, and delete any redundant lines.   
 
@@ -206,7 +210,7 @@ Add a date line and comment to the line where you have created the directory, fo
 
 ~~~
 # 2017_10_27   
-# Created sample directories for the Data Carpentry workshop  
+# Create directories for your workspace  
 ~~~
 {: .bash}
 
@@ -219,45 +223,45 @@ Your file should look something like this:
 
 ~~~
 # 2017_10_27
-# Created sample directories for the Data Carpentry workshop
+# Create directories for your workspace
 
-mkdir dc_workshop
-mkdir dc_workshop/docs
-mkdir dc_workshop/data
-mkdir dc_workshop/results
+mkdir workspace
+mkdir workspace/docs
+mkdir workspace/data
+mkdir workspace/results
 ~~~
 {: .output}
 
 If you keep this file up to date, you can use it to re-do your work on your project if something happens to your results files. To demonstrate how this works, first delete
-your `dc_workshop` directory and all of its subdirectories. Look at your directory
+your `workspace` directory and all of its subdirectories. Look at your directory
 contents to verify the directory is gone.
 
 ~~~
-$ rm -r dc_workshop
+$ rm -r workspace
 $ ls
 ~~~
 {: .bash}
 
 ~~~
-dc_sample_data	dc_workshop_log_2017_10_27.sh  FastQC	Trimmomatic-0.32
+dc_sample_data	workspace_log_2017_10_27.sh
 ~~~
 {: .output}
 
-Then run your workshop log file as a bash script. You should see the `dc_workshop`
+Then run your workspace log file as a bash script. You should see the `workspace`
 directory and all of its subdirectories reappear.
 
 ~~~
-$ bash dc_workshop_log_2017_10_27.sh
+$ bash workspace_log_2017_10_27.sh
 $ ls
 ~~~
 {: .bash}
 
 ~~~
-dc_sample_data	dc_workshop dc_workshop_log_2017_10_27.txt  FastQC	Trimmomatic-0.32
+dc_sample_data	workspace workspace_log_2017_10_27.txt
 ~~~
 {: .output}
 
-It's important that we keep our workshop log file outside of our `dc_workshop` directory
+It's important that we keep our workspace log file outside of our `workspace` directory
 if we want to use it to recreate our work. It's also important for us to keep it up to
 date by regularly updating with the commands that we used to generate our results files.
 
