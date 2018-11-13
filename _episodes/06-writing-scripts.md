@@ -1,5 +1,5 @@
 ---
-title: "Writing Scripts"
+title: "Writing Scripts and loops"
 teaching: 20
 exercises: 20
 questions:
@@ -9,8 +9,10 @@ objectives:
 - Write a basic shell script.
 - Use the `bash` command to execute a shell script.
 - Use `chmod` to make a script an executable program.
+- Use `for` loops to automate operations on multiple files.
 keypoints:
 - Scripts are a collection of commands executed together.
+- Loops make commands to be repeated multiple times.
 ---
 
 ## Writing files
@@ -30,7 +32,7 @@ $ nano README.txt
 ~~~
 {: .bash}
 
-You should see something like this: 
+You should see something like this:
 
 ![nano201711.png](../img/nano201711.png)
 
@@ -40,12 +42,12 @@ The text at the bottom of the screen shows the keyboard shortcuts for performing
 >
 > When we say, "`nano` is a text editor," we really do mean "text": it can
 > only work with plain character data, not tables, images, or any other
-> human-friendly media. We use it in examples because it is one of the 
-> least complex text editors. However, because of this trait, it may 
+> human-friendly media. We use it in examples because it is one of the
+> least complex text editors. However, because of this trait, it may
 > not be powerful enough or flexible enough for the work you need to do
 > after this workshop. On Unix systems (such as Linux and Mac OS X),
 > many programmers use [Emacs](http://www.gnu.org/software/emacs/) or
-> [Vim](http://www.vim.org/) (both of which require more time to learn), 
+> [Vim](http://www.vim.org/) (both of which require more time to learn),
 > or a graphical editor such as
 > [Gedit](http://projects.gnome.org/gedit/). On Windows, you may wish to
 > use [Notepad++](http://notepad-plus-plus.org/).  Windows also has a built-in
@@ -92,10 +94,10 @@ Now you've written a file. You can take a look at it with `less` or `cat`, or op
 
 > ## Exercise
 >
-> Open `README.txt` and add the date to the top of the file and save the file. 
+> Open `README.txt` and add the date to the top of the file and save the file.
 >
 > > ## Solution
-> > 
+> >
 > > Use `nano README.txt` to open the file.  
 > > Add today's date and then use <kbd>Ctrl</kbd>-<kbd>X</kbd> to exit and `y` to save.
 > >
@@ -135,13 +137,13 @@ $ bash bad-reads-script.sh
 It will look like nothing happened, but now if you look at `scripted_bad_reads.txt`, you can see that there are now reads in the file.
 
 > ## Exercise
-> 
-> 1. How many bad reads are there in the two FASTQ files combined? 
+>
+> 1. How many bad reads are there in the two FASTQ files combined?
 > 2. How many bad reads are in each of the two FASTQ files? (Hint: You will need to use the
 > `cut` command with the `-d` flag.)
-> 
+>
 > > ## Solution
-> > 
+> >
 > > 1. There are 537 / 4 bad reads in the two files combined.
 > >    
 > >    ~~~
@@ -155,7 +157,7 @@ It will look like nothing happened, but now if you look at `scripted_bad_reads.t
 > >    {: .output}
 > >    
 > >    If you look closely, you will see that there is a `--` delimiter inserted between the non-consecutive matches to grep. This accounts for the extra line. So there are 536 / 4 = 134 total bad reads.
-> > 
+> >
 > > 2. There are 536 / 4 bad reads for the `SRR098026.fastq` file and none for the other file.
 > >
 > >    ~~~
@@ -224,4 +226,69 @@ $ ./bad-reads-script.sh
 
 The script should run the same way as before, but now we've created our very own computer program!
 
-You will learn more about writing scripts in [a later lesson](http://www.datacarpentry.org/wrangling-genomics/02-automating_a_workflow/). 
+You will learn more about writing scripts in [a later lesson](http://www.datacarpentry.org/wrangling-genomics/02-automating_a_workflow/).
+
+## Automating operations on multiple files using loops
+
+- Using the keywords `for`, `do` and `done`.
+- Using indentation as good practice
+- Using variable to store different values when looping
+- Using `echo` statement first to always check if the structure of the loop is correct
+- Write `for` loop on multiple lines but also on one liner
+
+~~~
+for name in Anne Jon Marc Mark
+   do echo $name
+done
+~~~
+{: .bash}
+
+We are now going to loop over the fastq files in `untrimmed_fastq` directory with a for loop instead of using a wildcard `*.fastq`, to be able to execute multiple tasks on the same file.
+
+~~~
+for filename in SRR097977.fastq SRR098026.fastq
+   do echo $filename
+done
+~~~
+{: .bash}
+
+This could also be written using `*.fastq` to get the list of all fastq files instead of typing their names:
+~~~
+for filename in *.fastq
+   do echo $filename
+done
+~~~
+{: .bash}
+
+To add another task to be executed on the same filename, the task is written under the first one, there is not need to repeat the `do`. Every line in the loop will be execute one after each other:
+~~~
+for filename in *.fastq
+   do echo $filename
+   wc -l $filename
+done
+~~~
+{: .bash}
+
+> ## Exercise
+>
+> Write a `fastq_script.sh` script to print all fastq file names, count their number of lines, and find the number of bad reads in each file.
+>
+> > ## Solution
+> >
+> > Use `nano fastq_script.sh` to open the file.  
+> > Start with a comment using # and add today's date
+> > Loop over all files using `for`, `do`, `done`
+> > Count number of lines using ` wc -l`
+> > Find number of bad reads using `grep NNNN`
+> >    ~~~
+> >    for filename in *.fastq
+> >       do echo $filename
+> >       wc -l $filename
+> >       grep NNNNNNNN $filename | wc -l
+> >    done
+> >    ~~~
+> >    {: .bash}
+> > use <kbd>Ctrl</kbd>-<kbd>X</kbd> to exit and `y` to save.
+> >
+> {: .solution}
+{: .challenge}
